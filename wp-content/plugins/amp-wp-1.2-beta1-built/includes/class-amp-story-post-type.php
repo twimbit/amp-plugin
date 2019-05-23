@@ -64,7 +64,7 @@ class AMP_Story_Post_Type {
 	 *
 	 * @var string
 	 */
-	const REWRITE_SLUG = 'stories';
+	const REWRITE_SLUG = 'posts';
 
 	/**
 	 * AMP Stories style handle.

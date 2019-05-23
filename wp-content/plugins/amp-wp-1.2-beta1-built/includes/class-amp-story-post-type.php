@@ -15,7 +15,7 @@ class AMP_Story_Post_Type {
 	 *
 	 * @var string
 	 */
-	const POST_TYPE_SLUG = 'amp_story';
+	const POST_TYPE_SLUG = 'postK';
 
 	/**
 	 * The image size for the AMP story card, used in an embed and the Latest Stories block.

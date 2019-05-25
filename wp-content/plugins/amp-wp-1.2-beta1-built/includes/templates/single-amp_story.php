@@ -89,33 +89,6 @@ the_post();
 
 
 
-            <amp-sidebar id="sidebar2" layout="nodisplay" side="right">
-                <ul>
-                    <li>Nav item 1</li>
-                    <li><a href="#idFour" on="tap:idFour.scrollTo">Nav item 4</a></li>
-                    <li><BUTTON id="ub" onclick="myunction()">Click me</BUTTON></li>
-                    <li>Nav item 6</li>
-                </ul>
-                <nav toolbar="(max-width: 400px)" toolbar-target="target-element">
-
-                </nav>
-            </amp-sidebar>
-
-                <amp-sidebar id="sidebar1" layout="nodisplay" side="right">
-                <ul>
-                    <li>Nav item 1</li>
-                    <li><a href="#idTwo" on="tap:idTwo.scrollTo">Nav item 2</a></li>
-                    <li><a onclick="myunction()">Nav item 3</a></li>
-                    <li><a href="#idFour" on="tap:idFour.scrollTo">Nav item 4</a></li>
-                    <li><BUTTON id="ub" onclick="myunction()">Click me</BUTTON></li>
-                    <li>Nav item 6</li>
-                </ul>
-
-                <nav toolbar="(max-width: 400px)" toolbar-target="target-element">
-                </nav>
-            </amp-sidebar>
-
-
 			<?php
            echo the_content();
             ?>

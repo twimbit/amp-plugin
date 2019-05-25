@@ -57,7 +57,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     background: rgba(0, 0, 0, 0.28);
         border-radius: 10px 10px 0px 0px;
     /* background-image: inherit; */
-    box-shadow: 0px 2px 16px 3px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.35);
 "><a href="<?php echo $previous_post_url; ?>"
 
             style="    background-image: url(../../previous.png);

@@ -48,12 +48,20 @@ the_post();
 
 
     <!--  <button style="margin-bottom: -10px;left: 10px;z-index: 10;position: fixed;">TEXT BB</button>    -->
-    <a href='<?php echo $previous_post_url ?>'
-       style="
-    margin-bottom: -10px;
+    <a href='../../'
+
+       style="    background-image: url(../../home.png);
+    /* margin: 17px; */
     left: 10px;
+    background-repeat: no-repeat;
     z-index: 10;
-    position: fixed;"><img src=home.png width="512" height="512" title="Go  home" alt="Go home"></a>
+    /* padding: 10px; */
+    height: 28px;
+    width: 28px;
+    margin-top: 14px;
+    background-size: contain;
+    position: fixed;"
+    ></a>
     <!-- //imgsrc insert https://image.shutterstock.com/image-vector/home-icon-isolated-on-transparent-450w-654663997.jpg https://image.flaticon.com/icons/svg/149/149445.svg  -->
     <!-- <img src="https://image.shutterstock.com/image-vector/home-icon-isolated-on-transparent-450w-654663997.jpg" width="42" height="46" title="Go  home" alt="Go home">   -->
 

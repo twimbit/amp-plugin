@@ -21,6 +21,7 @@ the_post();
 		<?php rel_canonical(); ?>
 		<?php amp_add_generator_metadata(); ?>
 		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+       <!-- style for sidebar navigation -->
         <style amp-custom="">
 
             .amp-sidebar-toolbar-target-shown {
@@ -35,23 +36,11 @@ the_post();
                location.replace("https://www.w3schools.com")
             }
         </script>
-
-        <script type="text/javascript">
-            function getUrl()
-            {
-                location.replace("https://www.w3schools.com")
-            }
-            }
-
-        </script>
-
-
     </head>
-
-
 
     <body >
 
+    <!-- Get next and previous post url -->
     <?php
     $next_post_url = get_permalink( get_adjacent_post(false,'',false)->ID );
     $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );

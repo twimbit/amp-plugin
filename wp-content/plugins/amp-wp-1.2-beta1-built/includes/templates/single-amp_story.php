@@ -46,17 +46,16 @@ $next_post_url = get_permalink( get_adjacent_post(false,'',false)->ID );
 $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
 ?>
 
-
-<!--  <button style="margin-bottom: -10px;left: 10px;z-index: 10;position: fixed;">TEXT BB</button>    -->
+<!-- bottom navigation button -->
 <div style="
     position: fixed;
     height: 25px;
     z-index: 10;
     bottom: 0;
-    padding-bottom: 25px;
+    padding-bottom: 20px;
     width: 100%;
     background: rgba(0,0,0,0.5);
-"><a href='../../'
+"><a href="<?php echo $previous_post_url; ?>"
 
             style="    background-image: url(../../previous.png);
     /* margin: 17px; */
@@ -64,7 +63,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     background-repeat: no-repeat;
     z-index: 10;
     /* padding: 10px; */
-    height: 25px;
+    height: 20px;
     width: 32%;
     margin-top: 14px;
     background-position: center;
@@ -79,14 +78,14 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     background-repeat: no-repeat;
     z-index: 10;
     /* padding: 10px; */
-    height: 25px;
+    height: 20px;
     width: 32%;
     margin-top: 14px;
     background-position: center;
     background-size: contain;
     display: inline-grid"
     ></a>
-    <a href='../../'
+    <a href='<?php echo $next_post_url; ?>'
 
        style="    background-image: url(../../next.png);
     /* margin: 17px; */
@@ -94,7 +93,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     background-repeat: no-repeat;
     z-index: 10;
     /* padding: 10px; */
-    height: 25px;
+    height: 20px;
     width: 32%;
     margin-top: 14px;
     background-position: center;
@@ -104,8 +103,6 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
 
 
 </div>
-<!-- //imgsrc insert https://image.shutterstock.com/image-vector/home-icon-isolated-on-transparent-450w-654663997.jpg https://image.flaticon.com/icons/svg/149/149445.svg  -->
-<!-- <img src="https://image.shutterstock.com/image-vector/home-icon-isolated-on-transparent-450w-654663997.jpg" width="42" height="46" title="Go  home" alt="Go home">   -->
 
 <?php
 $metadata = amp_get_schemaorg_metadata();

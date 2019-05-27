@@ -22,20 +22,6 @@ the_post();
 	<?php amp_add_generator_metadata(); ?>
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
     <!-- style for sidebar navigation -->
-    <style amp-custom="">
-
-        .amp-sidebar-toolbar-target-shown {
-            display: none;
-        }
-    </style>
-
-    <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
-
-    <script>
-		function myunction() {
-			location.replace("https://www.w3schools.com")
-		}
-    </script>
 </head>
 
 <body >
@@ -61,7 +47,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.35);
 "><a href="<?php echo $previous_post_url; ?>"
 
-            style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png)');
+            style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png');
     /* margin: 17px; */
     left: 10px;
     background-repeat: no-repeat;
@@ -76,7 +62,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     ></a>
     <a href='<?php echo home_url(); ?>'
 
-       style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/home.png)');
+       style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/home.png');
     /* margin: 17px; */
     left: 10px;
     background-repeat: no-repeat;
@@ -91,7 +77,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     ></a>
     <a href='<?php echo $next_post_url; ?>'
 
-       style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png)');
+       style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png');
     /* margin: 17px; */
     left: 10px;
     background-repeat: no-repeat;

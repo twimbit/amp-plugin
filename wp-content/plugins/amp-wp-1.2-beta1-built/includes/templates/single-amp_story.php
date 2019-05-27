@@ -22,6 +22,14 @@ the_post();
 	<?php amp_add_generator_metadata(); ?>
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
     <!-- style for sidebar navigation -->
+
+    <!-- To load new story and remove previous history -->
+    <script type="text/javascript">
+		function change_post(url_toload)
+		{
+			location.replace(url_toload)
+		}
+    </script>
 </head>
 
 <body >
@@ -45,9 +53,9 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
         border-radius: 10px 10px 0px 0px;
     /* background-image: inherit; */
     box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.35);
-"><a href="<?php echo $previous_post_url; ?>"
+"><a href="javascript:change_post(<?php echo $previous_post_url;?>)"
 
-            style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png');
+    style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png');
     /* margin: 17px; */
     left: 10px;
     background-repeat: no-repeat;
@@ -75,7 +83,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     background-size: contain;
     display: inline-grid"
     ></a>
-    <a href='<?php echo $next_post_url; ?>'
+    <a href="javascript:change_post(<?php echo $next_post_url;?>)"
 
        style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png');
     /* margin: 17px; */

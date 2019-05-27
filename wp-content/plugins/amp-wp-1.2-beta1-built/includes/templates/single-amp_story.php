@@ -42,6 +42,7 @@ the_post();
 
 <!-- Get next and previous post url -->
 <?php
+$home_url = get_home_url( null,'/',null );
 $next_post_url = get_permalink( get_adjacent_post(false,'',false)->ID );
 $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
 ?>
@@ -60,7 +61,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.35);
 "><a href="<?php echo $previous_post_url; ?>"
 
-            style="    background-image: url(../../previous.png);
+            style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png)');
     /* margin: 17px; */
     left: 10px;
     background-repeat: no-repeat;
@@ -73,9 +74,9 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     background-size: contain;
     display: inline-grid"
     ></a>
-    <a href='../../'
+    <a href='<?php echo home_url(); ?>'
 
-       style="    background-image: url(../../home.png);
+       style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/home.png)');
     /* margin: 17px; */
     left: 10px;
     background-repeat: no-repeat;
@@ -90,7 +91,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     ></a>
     <a href='<?php echo $next_post_url; ?>'
 
-       style="    background-image: url(../../next.png);
+       style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png)');
     /* margin: 17px; */
     left: 10px;
     background-repeat: no-repeat;

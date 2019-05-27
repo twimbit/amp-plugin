@@ -15,6 +15,7 @@ class AMP_Story_Post_Type {
 	 *
 	 * @var string
 	 */
+	// to make stories behave like posts
 	const POST_TYPE_SLUG = 'post';
 
 	/**

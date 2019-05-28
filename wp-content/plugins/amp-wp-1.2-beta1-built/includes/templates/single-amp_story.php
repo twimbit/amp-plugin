@@ -62,27 +62,13 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     z-index: 10;
     /* padding: 10px; */
     height: 20px;
-    width: 32%;
+    width: 49%;
     margin-top: 14px;
     background-position: center;
     background-size: contain;
     display: inline-grid"
     ></a>
-    <a href='<?php echo home_url(); ?>'
 
-       style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/home.png');
-    /* margin: 17px; */
-    left: 10px;
-    background-repeat: no-repeat;
-    z-index: 10;
-    /* padding: 10px; */
-    height: 20px;
-    width: 32%;
-    margin-top: 14px;
-    background-position: center;
-    background-size: contain;
-    display: inline-grid"
-    ></a>
     <a href="javascript:change_post(<?php echo $next_post_url;?>)"
 
        style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png');
@@ -92,7 +78,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     z-index: 10;
     /* padding: 10px; */
     height: 20px;
-    width: 32%;
+    width: 49%;
     margin-top: 14px;
     background-position: center;
     background-size: contain;

@@ -1576,7 +1576,7 @@
 		},
 		nt = function() {
 			var e = Object(Ze.b)().width,
-				t = Math.max(696, e);
+				t = Math.max(200, e);
 			return {
 				width: t,
 				height: 1 / .75 * t
@@ -3657,7 +3657,7 @@
 		},
 		c = function() {
 			return {
-				width: 600,
+				width: 200,
 				height: 337
 			}
 		},

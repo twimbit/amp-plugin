@@ -931,7 +931,7 @@ this.AMP = function(e) {
         },
         X = function() {
             var e = Object(_.b)().width,
-                t = Math.max(696, e);
+                t = Math.max(200, e);
             return {
                 width: t,
                 height: 1 / .75 * t
@@ -4393,7 +4393,7 @@ this.AMP = function(e) {
         },
         l = function() {
             return {
-                width: 600,
+                width: 200,
                 height: 337
             }
         },

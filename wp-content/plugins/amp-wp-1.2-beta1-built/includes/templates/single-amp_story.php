@@ -30,6 +30,15 @@ the_post();
 			location.replace(url_toload)
 		}
     </script>
+
+    <!-- check item click listener -->
+    <script>
+	    document.getElementById("bokend").addEventListener("click", change_post("https://fb.com"));
+
+
+    </script>
+
+
 </head>
 
 <body >
@@ -123,6 +132,44 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
 	<?php
 	echo the_content();
 	?>
+
+    <amp-story-bookend layout=nodisplay>
+        <script type="application/json">
+            {
+                "bookendVersion": "v1.0",
+                "shareProviders": [
+                    "email",
+                    "tumblr",
+                    {
+                        "provider": "twitter",
+                        "text": "This is custom share text that I would like for the Twitter platform"
+                    },
+                    {
+                        "provider": "facebook",
+                        "app_id": "MY_FACEBOOK_APP_ID"
+                    }
+                ],
+                "components": [
+                    {
+                        "type": "heading",
+                        "text": "More to read"
+                    },
+                    {
+                        "type": "small",
+                        "title": "This is India an the best places you should go",
+                        "url": "http://localhost/app/posts/p10/",
+                        "image": "http://placehold.it/256x128"
+                    },
+                    {
+                        "type": "small",
+                        "title": "This is India an the best places you should go",
+                        "url": "https://google.com",
+                        "image": "http://placehold.it/256x128"
+                    }
+                ]
+            }
+        </script>
+    </amp-story-bookend>
 </amp-story>
 
 <?php

@@ -65,6 +65,7 @@ class AMP_Story_Post_Type {
 	 *
 	 * @var string
 	 */
+	// to make stories behave like posts
 	const REWRITE_SLUG = 'posts';
 
 	/**

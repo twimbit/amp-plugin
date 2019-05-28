@@ -32,11 +32,7 @@ the_post();
     </script>
 
     <!-- check item click listener -->
-    <script>
-	    document.getElementById("bokend").addEventListener("click", change_post("https://fb.com"));
 
-
-    </script>
 
 
 </head>

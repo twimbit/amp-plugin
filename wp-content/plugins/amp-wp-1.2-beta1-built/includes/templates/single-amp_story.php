@@ -47,6 +47,22 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
 ?>
 
 <!-- bottom navigation button -->
+<a href="javascript:change_post(<?php echo $home_url;?>)"
+
+   style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/home.png');
+           /* margin: 17px; */
+           left: 10px;
+           background-repeat: no-repeat;
+           z-index: 10;
+           /* padding: 10px; */
+           height: 30px;
+           position: fixed;
+           width: 30px;
+           margin-top: 14px;
+           background-position: center;
+           background-size: contain;"
+></a>
+
 <div style="
     position: fixed;
     height: 25px;

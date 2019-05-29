@@ -4393,7 +4393,7 @@ this.AMP = function(e) {
         },
         l = function() {
             return {
-                width: 200,
+                width: 200, // changed width
                 height: 337
             }
         },

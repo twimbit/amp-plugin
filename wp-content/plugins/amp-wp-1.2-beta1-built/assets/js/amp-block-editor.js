@@ -3657,7 +3657,7 @@
 		},
 		c = function() {
 			return {
-				width: 200,
+				width: 200, // featured image width
 				height: 337
 			}
 		},

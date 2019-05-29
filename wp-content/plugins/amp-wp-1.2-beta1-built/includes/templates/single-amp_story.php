@@ -86,10 +86,9 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
              display: inline-grid"
     ></a>
 
-    <button
-            onClick="replace()"
+    <a  href="javascript:change_post(<?php echo $next_post_url;?>)"
 
-            style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png');
+        style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png');
                     /* margin: 17px; */
                     left: 10px;
                     background-repeat: no-repeat;
@@ -101,7 +100,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
                     background-position: center;
                     background-size: contain;
                     display: inline-grid"
-    ></button>
+    ></a>
 
 
 </div>
@@ -142,9 +141,11 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
 	echo the_content();
 	?>
 	<?php
-	$nextPost = get_next_post();
-	$nextThumbnail = get_the_post_thumbnail_url($nextPost->ID)?>
+	//$nextPost = get_next_post();
+	//$nextThumbnail = get_the_post_thumbnail_url($nextPost->ID)?>
+<?php
 
+?>
     <amp-story-bookend layout=nodisplay>
         <script type="application/json">
             {
@@ -165,23 +166,76 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
                     {
                         "type": "heading",
                         "text": "More to read"
-                    },
-                    {
-                        "type": "landscape",
-                        "title": "<?php echo $nextPost->post_title;?>",
-	                        "url": "<?php echo get_permalink($nextPost); ?>",
-	                        "image": "<?php echo get_the_post_thumbnail_url($nextPost->ID); ?>"
-                    },
-<?php  setup_postdata($nextPost); ?>
-                    {
-                        "type": "landscape",
-                        "title": "<?php echo $nextPost->post_title;?>",
-	                        "url": "<?php echo get_permalink($nextPost); ?>",
-	                        "image": "<?php echo get_the_post_thumbnail_url($nextPost->ID); ?>"
                     }
-                ]
-            }
-        </script>
+<?php
+
+            $loop_length=30;  //specify number of posts ahead you want to display
+            $check_help=0;    //require as a checkpoint to follow different paths in loop
+            global $post;
+            $revert_post_content=$post;  //save current global post content to setback changes to current post after loop execution ends
+	        for($loop_start = 1; $loop_start <= $loop_length; $loop_start++)
+	        {
+	            if( $loop_start === 1)
+                {
+                    $nextPost = get_next_post();
+                }
+	            else
+	            {
+		            global $post;
+		            $post = get_next_post();
+		            setup_postdata( $post );
+
+		            if($check_help===1)
+		               {
+			                $nextPost = $post;
+			                $check_help=2;
+		               }
+		            else
+		                {
+		                    $nextPost = get_next_post();
+			                $check_help=0;
+		                }
+	            }
+	        if(get_permalink($nextPost) != get_permalink($post))   // to check when last post arrives to loop back to first posts
+                 {
+                 }
+	        else
+	            {
+		            global $post;
+		            $post = get_boundary_post()[0];
+		            setup_postdata( $post );
+	                if($check_help!=0 )
+	                {
+		                $nextPost = get_next_post();
+	                }
+	                else
+	                {
+		                $nextPost = $post;
+		                $check_help=1;
+                    }
+
+                }
+		        echo ',{';
+		        if( $loop_start === 1)
+		        {
+			        echo ' "type": "landscape", ';
+		        }
+		        else
+		        {
+			        echo ' "type": "small", ';
+		        }
+		        echo '"title": "'; echo $nextPost->post_title ; echo '",';
+		        echo '"url": "'; echo get_permalink($nextPost); echo '",';
+		        echo '"image": "'; echo get_the_post_thumbnail_url($nextPost->ID); echo '"';
+		        echo '}';
+	        if( $loop_start === $loop_length)
+            { //wp_reset_postdata();
+              $post=$revert_post_content;}
+	        }
+	        ?>
+  ]
+      }
+     </script>
     </amp-story-bookend>
 </amp-story>
 

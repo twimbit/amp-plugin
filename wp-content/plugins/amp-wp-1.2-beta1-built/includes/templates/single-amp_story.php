@@ -24,15 +24,11 @@ the_post();
     <!-- style for sidebar navigation -->
 
     <!-- To load new story and remove previous history -->
-    <script type="text/javascript">
-		function change_post(url_toload)
-		{
-			location.replace(url_toload)
-		}
-    </script>
 
     <!-- check item click listener -->
+    <amp-script layout="container" src="script.js">
 
+    </amp-script>
 
 
 </head>
@@ -47,7 +43,7 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
 ?>
 
 <!-- bottom navigation button -->
-<a href="javascript:change_post(<?php echo $home_url;?>)"
+<a href="<?php echo $home_url;?>"
 
    style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/home.png');
            /* margin: 17px; */
@@ -76,35 +72,36 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.35);
 "><a href="javascript:change_post(<?php echo $previous_post_url;?>)"
 
-    style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png');
-    /* margin: 17px; */
-    left: 10px;
-    background-repeat: no-repeat;
-    z-index: 10;
-    /* padding: 10px; */
-    height: 20px;
-    width: 49%;
-    margin-top: 14px;
-    background-position: center;
-    background-size: contain;
-    display: inline-grid"
+     style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png');
+             /* margin: 17px; */
+             left: 10px;
+             background-repeat: no-repeat;
+             z-index: 10;
+             /* padding: 10px; */
+             height: 20px;
+             width: 49%;
+             margin-top: 14px;
+             background-position: center;
+             background-size: contain;
+             display: inline-grid"
     ></a>
 
-    <a href="javascript:change_post(<?php echo $next_post_url;?>)"
+    <button
+            onClick="replace()"
 
-       style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png');
-    /* margin: 17px; */
-    left: 10px;
-    background-repeat: no-repeat;
-    z-index: 10;
-    /* padding: 10px; */
-    height: 20px;
-    width: 49%;
-    margin-top: 14px;
-    background-position: center;
-    background-size: contain;
-    display: inline-grid"
-    ></a>
+            style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png');
+                    /* margin: 17px; */
+                    left: 10px;
+                    background-repeat: no-repeat;
+                    z-index: 10;
+                    /* padding: 10px; */
+                    height: 20px;
+                    width: 49%;
+                    margin-top: 14px;
+                    background-position: center;
+                    background-size: contain;
+                    display: inline-grid"
+    ></button>
 
 
 </div>
@@ -144,6 +141,9 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
 	<?php
 	echo the_content();
 	?>
+	<?php
+	$nextPost = get_next_post();
+	$nextThumbnail = get_the_post_thumbnail_url($nextPost->ID)?>
 
     <amp-story-bookend layout=nodisplay>
         <script type="application/json">
@@ -167,16 +167,17 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
                         "text": "More to read"
                     },
                     {
-                        "type": "small",
-                        "title": "This is India an the best places you should go",
-                        "url": "http://localhost/app/posts/p10/",
-                        "image": "http://placehold.it/256x128"
+                        "type": "landscape",
+                        "title": "<?php echo $nextPost->post_title;?>",
+	                        "url": "<?php echo get_permalink($nextPost); ?>",
+	                        "image": "<?php echo get_the_post_thumbnail_url($nextPost->ID); ?>"
                     },
+<?php  setup_postdata($nextPost); ?>
                     {
-                        "type": "small",
-                        "title": "This is India an the best places you should go",
-                        "url": "https://google.com",
-                        "image": "http://placehold.it/256x128"
+                        "type": "landscape",
+                        "title": "<?php echo $nextPost->post_title;?>",
+	                        "url": "<?php echo get_permalink($nextPost); ?>",
+	                        "image": "<?php echo get_the_post_thumbnail_url($nextPost->ID); ?>"
                     }
                 ]
             }

@@ -39,8 +39,8 @@ the_post();
             margin-top: 14px;
             border: none;
             box-shadow: 0px -2px 9px 1px rgba(0,0,0,.2);
-            background-position: center;
-            background-size: 23px;
+            background-position: center 5px;
+            background-size: 20px;
             display: inline-grid;
         }
     </style>
@@ -67,9 +67,9 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
     position: fixed;
 
     z-index: 10;
-    bottom: -3px;
+    bottom: -20px;
     width: 100%;
-    padding: 2px;
+    padding: 3px;
     align-self: center;
 ">
     <a style="
@@ -144,15 +144,8 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
                 "bookendVersion": "v1.0",
                 "shareProviders": [
                     "email",
-                    "tumblr",
-                    {
-                        "provider": "twitter",
-                        "text": "This is custom share text that I would like for the Twitter platform"
-                    },
-                    {
-                        "provider": "facebook",
-                        "app_id": "MY_FACEBOOK_APP_ID"
-                    }
+                    "linkedin",
+                    "whatsapp"
                 ],
                 "components": [
                     {

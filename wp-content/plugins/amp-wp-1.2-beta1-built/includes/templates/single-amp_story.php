@@ -58,6 +58,24 @@ the_post();
 $home_url = get_home_url( null,'/',null );
 $next_post_url = get_permalink( get_adjacent_post(false,'',false)->ID );
 $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
+
+// section to loop stories (from  1st to last on previous click and last to 1st on next click
+if(get_permalink(get_adjacent_post(false,'',false)) === get_permalink($post))
+{
+	global $post;
+	$post = get_boundary_post()[0];
+	setup_postdata( $post );
+	$next_post_url = get_permalink( $post );
+	wp_reset_postdata();
+}
+if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
+{
+	global $post;
+	$post = get_boundary_post(false,'',false)[0];
+	setup_postdata( $post );
+	$previous_post_url = get_permalink( $post );
+	wp_reset_postdata();
+}
 ?>
 
 <!-- bottom navigation button -->

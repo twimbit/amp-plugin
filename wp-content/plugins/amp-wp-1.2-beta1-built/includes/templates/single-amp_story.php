@@ -26,6 +26,24 @@ the_post();
     <!-- To load new story and remove previous history -->
 
     <!-- check item click listener -->
+
+    <style>
+        .button_bottom{
+            background: rgba(0, 0, 0, 0.28);
+            border-radius: 3px;
+            left: 10px;
+            background-repeat: no-repeat;
+            z-index: 10;
+            height: 40px;
+            width: 32%;
+            margin-top: 14px;
+            border: none;
+            box-shadow: 0px -2px 9px 1px rgba(0,0,0,.2);
+            background-position: center;
+            background-size: 23px;
+            display: inline-grid;
+        }
+    </style>
     <amp-script layout="container" src="script.js">
 
     </amp-script>
@@ -43,69 +61,43 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
 ?>
 
 <!-- bottom navigation button -->
-<a href="<?php echo $home_url;?>"
 
-   style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/home.png');
-           /* margin: 17px; */
-           left: 10px;
-           background-repeat: no-repeat;
-           z-index: 10;
-           /* padding: 10px; */
-           height: 30px;
-           position: fixed;
-           width: 30px;
-           margin-top: 14px;
-           background-position: center;
-           background-size: contain;"
-></a>
 
 <div style="
     position: fixed;
-    height: 25px;
+
     z-index: 10;
-    bottom: 0;
-    padding-bottom: 20px;
+    bottom: -3px;
     width: 100%;
-    background: rgba(0, 0, 0, 0.28);
-        border-radius: 10px 10px 0px 0px;
-    /* background-image: inherit; */
-    box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.35);
-"><a href="javascript:change_post(<?php echo $previous_post_url;?>)"
+    padding: 2px;
+    align-self: center;
+">
+    <a style="
+    color: #fafafa00;
+" href="<?php echo $previous_post_url;?>">
+        <button  class="button_bottom" style=" background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png') !important;">
 
-     style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png');
-             /* margin: 17px; */
-             left: 10px;
-             background-repeat: no-repeat;
-             z-index: 10;
-             /* padding: 10px; */
-             height: 20px;
-             width: 49%;
-             margin-top: 14px;
-             background-position: center;
-             background-size: contain;
-             display: inline-grid"
-    ></a>
+        </button>
+    </a>
 
-    <a  href="javascript:change_post(<?php echo $next_post_url;?>)"
+    <a style="
+    color: #fafafa00;
+" href="<?php echo $home_url;?>)">
+        <button class="button_bottom" style="background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/home.png') !important;">
 
-        style="    background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png');
-                    /* margin: 17px; */
-                    left: 10px;
-                    background-repeat: no-repeat;
-                    z-index: 10;
-                    /* padding: 10px; */
-                    height: 20px;
-                    width: 49%;
-                    margin-top: 14px;
-                    background-position: center;
-                    background-size: contain;
-                    display: inline-grid"
-    ></a>
+        </button>
+    </a>
+    <a style="
+    color: #fafafa00;
+" href="<?php echo $next_post_url;?>)">
+        <button class="button_bottom" style="background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/next.png'); !important;">
 
-
+        </button>
+    </a>
 </div>
 
-<?php
+
+    <?php
 $metadata = amp_get_schemaorg_metadata();
 if ( isset( $metadata['publisher']['logo']['url'] ) ) {
 	$publisher_logo_src = $metadata['publisher']['logo']['url']; // @todo Use amp-publisher-logo.
@@ -168,8 +160,8 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
                         "text": "More to read"
                     }
 <?php
-
-            $loop_length=30;  //specify number of posts ahead you want to display
+// to loop post in bookend
+            $loop_length=3;  //specify number of posts ahead you want to display
             $check_help=0;    //require as a checkpoint to follow different paths in loop
             global $post;
             $revert_post_content=$post;  //save current global post content to setback changes to current post after loop execution ends

@@ -44,9 +44,12 @@ the_post();
             display: inline-grid;
         }
     </style>
-    <amp-script layout="container" src="script.js">
+    <script type="application/javascript">
+        document.getElementById('back_button').addEventListener('click',function () {
+            location.replace('https://google.com');
 
-    </amp-script>
+        });
+    </script>
 
 
 </head>
@@ -92,8 +95,8 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
 ">
     <a style="
     color: #fafafa00;
-" href="<?php echo $previous_post_url;?>">
-        <button  class="button_bottom" style=" background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png') !important;">
+" >
+        <button  id="back_button" class="button_bottom" style=" background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png') !important;">
 
         </button>
     </a>

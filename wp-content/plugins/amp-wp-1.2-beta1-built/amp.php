@@ -706,3 +706,10 @@ function amp_redirect_old_slug_to_new_url( $link ) {
 
 	return $link;
 }
+
+// section included to add tags and categories section to STORIES
+add_action('init', 'add_category_tags_to_cpt');
+function add_category_tags_to_cpt() {
+	register_taxonomy_for_object_type('category', 'amp_story');
+	register_taxonomy_for_object_type('post_tag', 'amp_story');
+}

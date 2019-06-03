@@ -15,8 +15,9 @@ class AMP_Story_Post_Type {
 	 *
 	 * @var string
 	 */
-	// to make stories behave like posts
-	const POST_TYPE_SLUG = 'post';
+	// (PREVIOUS) to make stories behave like posts
+    // changed back to stories
+	const POST_TYPE_SLUG = 'amp_story';
 
 	/**
 	 * The image size for the AMP story card, used in an embed and the Latest Stories block.
@@ -65,8 +66,9 @@ class AMP_Story_Post_Type {
 	 *
 	 * @var string
 	 */
-	// to make stories behave like posts
-	const REWRITE_SLUG = 'posts';
+	// (previous) to make stories behave like posts
+	//changed back to stories
+    const REWRITE_SLUG = 'stories';
 
 	/**
 	 * AMP Stories style handle.
@@ -103,6 +105,7 @@ class AMP_Story_Post_Type {
 			self::POST_TYPE_SLUG,
 			array(
 				'labels'       => array(
+					'taxonomies' => array('category', 'post_tag'),
 					'name'                     => _x( 'Stories', 'post type general name', 'amp' ),
 					'singular_name'            => _x( 'Story', 'post type singular name', 'amp' ),
 					'add_new'                  => _x( 'New', 'story', 'amp' ),

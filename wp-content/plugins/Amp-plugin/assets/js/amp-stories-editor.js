@@ -436,7 +436,7 @@ this.AMP = function(e) {
         },
         ee = function() {
             var e = Object(_.b)().width,
-                t = 200; // changed width
+                t = 200; // changed feature image width
             return {
                 width: t,
                 height: 1 / .75 * t

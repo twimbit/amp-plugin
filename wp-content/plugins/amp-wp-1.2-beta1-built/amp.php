@@ -5,7 +5,7 @@
  * Plugin URI: https://amp-wp.org
  * Author: AMP Project Contributors
  * Author URI: https://github.com/ampproject/amp-wp/graphs/contributors
- * Version: 1.2-beta1-20190521T235737Z-e3d25e9a
+ * Version: 1.2-beta2-20190604T165802Z-4530a2c6
  * Text Domain: amp
  * Domain Path: /languages/
  * License: GPLv2 or later
@@ -40,11 +40,10 @@ $_amp_required_extensions = array(
 	// Required by FasterImage.
 	'curl'   => array(
 		'functions' => array(
+			'curl_close',
 			'curl_error',
+			'curl_exec',
 			'curl_init',
-			'curl_multi_add_handle',
-			'curl_multi_exec',
-			'curl_multi_init',
 			'curl_setopt',
 		),
 	),
@@ -152,7 +151,7 @@ if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) || ! file_exists( __DIR__
 		sprintf(
 			/* translators: %s: composer install && npm install && npm run build */
 			__( 'You appear to be running the AMP plugin from source. Please do %s to finish installation.', 'amp' ), // phpcs:ignore WordPress.Security.EscapeOutput
-			'<code>composer install && npm install && npm run build</code>'
+			'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
 		)
 	);
 }
@@ -186,21 +185,31 @@ function _amp_show_load_errors_admin_notice() {
 // Abort if dependencies are not satisfied.
 if ( ! empty( $_amp_load_errors->errors ) ) {
 	add_action( 'admin_notices', '_amp_show_load_errors_admin_notice' );
-	if ( defined( 'WP_CLI' ) && WP_CLI ) {
+
+	if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
 		$messages = array( __( 'AMP plugin unable to initialize.', 'amp' ) );
 		foreach ( array_keys( $_amp_load_errors->errors ) as $error_code ) {
 			$messages = array_merge( $messages, $_amp_load_errors->get_error_messages( $error_code ) );
 		}
 		$message = implode( "\n * ", $messages );
 		$message = str_replace( array( '<code>', '</code>' ), '`', $message );
+		$message = html_entity_decode( $message, ENT_QUOTES );
+
+		if ( ! class_exists( 'WP_CLI' ) ) {
+			echo "$message\n"; // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+
+			exit( 1 );
+		}
+
 		WP_CLI::warning( $message );
 	}
+
 	return;
 }
 
 define( 'AMP__FILE__', __FILE__ );
 define( 'AMP__DIR__', dirname( __FILE__ ) );
-define( 'AMP__VERSION', '1.2-beta1-20190521T235737Z-e3d25e9a' );
+define( 'AMP__VERSION', '1.2-beta2-20190604T165802Z-4530a2c6' );
 
 /**
  * Print admin notice if plugin installed with incorrect slug (which impacts WordPress's auto-update system).
@@ -706,10 +715,4 @@ function amp_redirect_old_slug_to_new_url( $link ) {
 
 	return $link;
 }
-
-// section included to add tags and categories section to STORIES
-add_action('init', 'add_category_tags_to_cpt');
-function add_category_tags_to_cpt() {
-	register_taxonomy_for_object_type('category', 'amp_story');
-	register_taxonomy_for_object_type('post_tag', 'amp_story');
-}
+// add_filter( 'amp_story_supports_landscape', '__return_true' );

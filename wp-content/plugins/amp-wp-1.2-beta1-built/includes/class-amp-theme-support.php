@@ -931,22 +931,13 @@ class AMP_Theme_Support {
 			PHP_INT_MAX
 		);
 
+		add_action( 'admin_bar_init', array( __CLASS__, 'init_admin_bar' ) );
 		add_action( 'wp_head', 'amp_add_generator_metadata', 20 );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ), 0 ); // Enqueue before theme's styles.
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'dequeue_customize_preview_scripts' ), 1000 );
 		add_filter( 'customize_partial_render', array( __CLASS__, 'filter_customize_partial_render' ) );
 
 		add_action( 'wp_footer', 'amp_print_analytics' );
-
-		/*
-		 * Disable admin bar because admin-bar.css (28K) and Dashicons (48K) alone
-		 * combine to surpass the 50K limit imposed for the amp-custom style.
-		 */
-		if ( AMP_Options_Manager::get_option( 'disable_admin_bar' ) ) {
-			add_filter( 'show_admin_bar', '__return_false', 100 );
-		} else {
-			add_action( 'admin_bar_init', array( __CLASS__, 'init_admin_bar' ) );
-		}
 
 		/*
 		 * Start output buffering at very low priority for sake of plugins and themes that use template_redirect
@@ -1072,24 +1063,13 @@ class AMP_Theme_Support {
 	}
 
 	/**
-	 * Adds the form submit success and fail templates.
+	 * Amend the comment form with the redirect_to field to persist the AMP page after submission.
 	 */
 	public static function amend_comment_form() {
 		?>
 		<?php if ( is_singular() && ! amp_is_canonical() ) : ?>
 			<input type="hidden" name="redirect_to" value="<?php echo esc_url( amp_get_permalink( get_the_ID() ) ); ?>">
 		<?php endif; ?>
-
-		<div submit-success>
-			<template type="amp-mustache">
-				<p>{{{message}}}</p>
-			</template>
-		</div>
-		<div submit-error>
-			<template type="amp-mustache">
-				<p class="amp-comment-submit-error">{{{error}}}</p>
-			</template>
-		</div>
 		<?php
 	}
 
@@ -1298,6 +1278,22 @@ class AMP_Theme_Support {
 			},
 			41
 		);
+
+		// Convert admin bar bump callback into an inline style for admin-bar. See \WP_Admin_Bar::initialize().
+		if ( current_theme_supports( 'admin-bar' ) ) {
+			$admin_bar_args  = get_theme_support( 'admin-bar' );
+			$header_callback = $admin_bar_args[0]['callback'];
+		} else {
+			$header_callback = '_admin_bar_bump_cb';
+		}
+		remove_action( 'wp_head', $header_callback );
+		if ( '__return_false' !== $header_callback ) {
+			ob_start();
+			call_user_func( $header_callback );
+			$style = ob_get_clean();
+			$data  = trim( preg_replace( '#<style[^>]*>(.*)</style>#is', '$1', $style ) ); // See wp_add_inline_style().
+			wp_add_inline_style( 'admin-bar', $data );
+		}
 
 		// Emulate customize support script in PHP, to assume Customizer.
 		add_filter(
@@ -1698,11 +1694,37 @@ class AMP_Theme_Support {
 			unset( $args['validation_error_callback'] );
 		}
 
+		$status_code = http_response_code();
+
 		/*
-		 * Check if the response starts with HTML markup.
-		 * Without this check, JSON responses will be erroneously corrupted,
-		 * being wrapped in HTML documents.
+		 * Send a JSON response when the site is failing to handle AMP form submissions with a JSON response as required
+		 * or an AMP-Redirect-To response header was not sent. This is a common scenario for plugins that handle form
+		 * submissions and show the success page via the POST request's response body instead of invoking wp_redirect(),
+		 * in which case AMP_HTTP::intercept_post_request_redirect() will automatically send the AMP-Redirect-To header.
+		 * If the POST response is an HTML document then the form submission will appear to not have worked since there
+		 * is no success or failure message shown. By catching the case where HTML is sent in the response, we can
+		 * automatically send a generic success message when a 200 status is returned or a failure message when a 400+
+		 * response code is sent.
 		 */
+		$is_form_submission = (
+			isset( AMP_HTTP::$purged_amp_query_vars[ AMP_HTTP::ACTION_XHR_CONVERTED_QUERY_VAR ] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			&&
+			isset( $_SERVER['REQUEST_METHOD'] )
+			&&
+			'POST' === $_SERVER['REQUEST_METHOD']
+		);
+		if ( $is_form_submission && null === json_decode( $response ) && json_last_error() && ( is_bool( $status_code ) || ( $status_code >= 200 && $status_code < 300 ) || $status_code >= 400 ) ) {
+			if ( is_bool( $status_code ) ) {
+				$status_code = 200; // Not a web server environment.
+			}
+			return wp_json_encode(
+				array(
+					'status_code' => $status_code,
+					'status_text' => get_status_header_desc( $status_code ),
+				)
+			);
+		}
+
 		if ( '<' !== substr( ltrim( $response ), 0, 1 ) ) {
 			return $response;
 		}

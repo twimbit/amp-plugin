@@ -61,14 +61,14 @@ class FasterImage
     /**
      * Get the size of each of the urls in a list
      *
-     * @param array $urls
+     * @param string[] $urls URLs to fetch.
      *
-     * @return array
-     * @throws \Exception
+     * @return array Results.
+     * @throws \Exception When the cURL write callback fails to amend the $results.
      */
     public function batch(array $urls)
     {
-
+        // @codeCoverageIgnoreStart
         /**
          * It turns out that even when cURL is installed, the `curl_multi_init()
          * function may be disabled on some hosts who are seeking to guard against
@@ -95,6 +95,7 @@ class FasterImage
         if ( ! $has_curl_multi ) {
             return $this->batchSynchronously($urls);
         }
+        // @codeCoverageIgnoreEnd
 
         $multi   = curl_multi_init();
         $results = array();
@@ -142,10 +143,11 @@ class FasterImage
     /**
      * Get the size of each of the urls in a list, using synchronous method
      *
-     * @param array $urls
+     * @param string[] $urls URLs to fetch.
      *
-     * @return array
-     * @throws \Exception
+     * @return array Results.
+     * @throws \Exception When the cURL write callback fails to amend the $results.
+     * @codeCoverageIgnore
      */
     protected function batchSynchronously(array $urls) {
         $results = [];

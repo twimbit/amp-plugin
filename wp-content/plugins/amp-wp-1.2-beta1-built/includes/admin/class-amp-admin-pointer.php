@@ -195,7 +195,8 @@ class AMP_Admin_Pointer {
 
 				function setup() {
 					$( '<?php echo esc_js( $this->args['selector'] ); ?>' ).first().pointer( options ).pointer( 'open' );
-				}
+				};
+
 				if ( options.position && options.position.defer_loading ) {
 					$( window ).bind( 'load.wp-pointers', setup );
 				} else {

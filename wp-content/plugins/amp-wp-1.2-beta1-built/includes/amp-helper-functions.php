@@ -130,6 +130,7 @@ function amp_get_permalink( $post_id ) {
 	 * @since 0.2
 	 * @since 1.0 This filter does not apply when 'amp' theme support is present.
 	 *
+	 * @param false $amp_url AMP URL.
 	 * @param int   $post_id Post ID.
 	 */
 	return apply_filters( 'amp_get_permalink', $amp_url, $post_id );
@@ -739,6 +740,7 @@ function amp_get_content_embed_handlers( $post = null ) {
 			'AMP_Core_Block_Handler'        => array(),
 			'AMP_Twitter_Embed_Handler'     => array(),
 			'AMP_YouTube_Embed_Handler'     => array(),
+			'AMP_Crowdsignal_Embed_Handler' => array(),
 			'AMP_DailyMotion_Embed_Handler' => array(),
 			'AMP_Vimeo_Embed_Handler'       => array(),
 			'AMP_SoundCloud_Embed_Handler'  => array(),
@@ -755,7 +757,6 @@ function amp_get_content_embed_handlers( $post = null ) {
 			'AMP_Gfycat_Embed_Handler'      => array(),
 			'AMP_Hulu_Embed_Handler'        => array(),
 			'AMP_Imgur_Embed_Handler'       => array(),
-			'WPCOM_AMP_Polldaddy_Embed'     => array(),
 		),
 		$post
 	);
@@ -1128,4 +1129,35 @@ function amp_add_admin_bar_view_link( $wp_admin_bar ) {
 	);
 
 	$wp_admin_bar->add_menu( $parent );
+}
+
+/**
+ * Prints AMP Stories auto ads.
+ *
+ * @since 1.2
+ */
+function amp_print_story_auto_ads() {
+	/**
+	 * Filters the configuration data for <amp-story-auto-ads>.
+	 *
+	 * This allows Dynamically inserting ads into a story.
+	 *
+	 * @param array   $data Story ads configuration data.
+	 * @param WP_Post $post The current story's post object.
+	 */
+	$data = apply_filters( 'amp_story_auto_ads_configuration', array(), get_post() );
+
+	if ( empty( $data ) ) {
+		return;
+	}
+
+	$script_element = AMP_HTML_Utils::build_tag(
+		'script',
+		array(
+			'type' => 'application/json',
+		),
+		wp_json_encode( $data )
+	);
+
+	echo AMP_HTML_Utils::build_tag( 'amp-story-auto-ads', array(), $script_element ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }

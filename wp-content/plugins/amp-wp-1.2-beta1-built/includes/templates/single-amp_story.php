@@ -65,20 +65,42 @@ $previous_post_url = get_permalink( get_adjacent_post(false,'',true)->ID );
 // section to loop stories (from  1st to last on previous click and last to 1st on next click
 if(get_permalink(get_adjacent_post(false,'',false)) === get_permalink($post))
 {
-	global $post;
-	$post = get_boundary_post()[0];
-	setup_postdata( $post );
-	$next_post_url = get_permalink( $post );
-	wp_reset_postdata();
+    // getting the link of oldest story
+	$args = array(
+		'numberposts'      => 2,
+		'category'         => 0,
+		'orderby'          => 'date',
+		'order'            => 'ASC', // the 1st array element will be 1st story(oldest story)
+		'include'          => array(),
+		'exclude'          => array(),
+		'meta_key'         => '',
+		'meta_value'       => '',
+		'post_type'        => 'amp_story',
+		'suppress_filters' => true,
+	);
+	$get_post_for_story=get_posts($args);
+	$first_story=$get_post_for_story[0]; // 0 will give the 1st story here (oldest story)
+	$next_post_url = get_permalink( $first_story );
 }
 if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
 {
-	global $post;
-	$post = get_boundary_post(false,'',false)[0];
-	setup_postdata( $post );
-	$previous_post_url = get_permalink( $post );
-	wp_reset_postdata();
-}
+    // getting the link of latest story
+	$args = array(
+		'numberposts'      => 2,
+		'category'         => 0,
+		'orderby'          => 'date',
+		'order'            => 'DESC', // the 1st array element will be last story(latest story)
+		'include'          => array(),
+		'exclude'          => array(),
+		'meta_key'         => '',
+		'meta_value'       => '',
+		'post_type'        => 'amp_story',
+		'suppress_filters' => true,
+	);
+	$get_post_for_story=get_posts($args);
+	$last_story=$get_post_for_story[0]; // 0 will give the last  story here (latest story)
+	$previous_post_url = get_permalink( $last_story );
+	}
 ?>
 
 <!-- bottom navigation button -->
@@ -95,8 +117,8 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
 ">
     <a style="
     color: #fafafa00;
-" >
-        <button  id="back_button" class="button_bottom" style=" background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png') !important;">
+" href="<?php echo $previous_post_url;?>)">
+        <button  class="button_bottom" style=" background-image: url('<?php echo $home_url; ?>wp-content/plugins/amp-wp-1.2-beta1-built/assets/images/previous.png') !important;">
 
         </button>
     </a>
@@ -207,8 +229,24 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
                  }
 	        else
 	            {
+		            // getting the link of oldest story (1st story)
+		            $args = array(
+			            'numberposts'      => 2,
+			            'category'         => 0,
+			            'orderby'          => 'date',
+			            'order'            => 'ASC', // the 1st array element will be 1st story(oldest story)
+			            'include'          => array(),
+			            'exclude'          => array(),
+			            'meta_key'         => '',
+			            'meta_value'       => '',
+			            'post_type'        => 'amp_story',
+			            'suppress_filters' => true,
+		            );
+		            $get_post_for_story=get_posts($args);
+		            $first_story=$get_post_for_story[0]; // 0 will give the 1st  story here ( oldest story)
+
 		            global $post;
-		            $post = get_boundary_post()[0];
+		            $post = $first_story;
 		            setup_postdata( $post );
 	                if($check_help!=0 )
 	                {

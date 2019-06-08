@@ -281,19 +281,30 @@ $poster_landscape = wp_get_attachment_image_url( $thumbnail_id, AMP_Story_Post_T
 
                 }
                 echo ',{';
-                if( $loop_start === 1)
+
+                // to stop looping of stories
+                if($nextPost!==$revert_post_content)
                 {
-                    echo ' "type": "landscape", ';
+	                if ( $loop_start === 1 ) {
+		                echo ' "type": "landscape", ';
+	                } else {
+		                echo ' "type": "small", ';
+	                }
+	                echo '"title": "';
+	                echo $nextPost->post_title;
+	                echo '",';
+	                echo '"url": "';
+	                echo get_permalink( $nextPost );
+	                echo '",';
+	                echo '"image": "';
+	                echo get_the_post_thumbnail_url( $nextPost->ID );
+	                echo '"';
+	                echo '}';
                 }
-                else
-                {
-                    echo ' "type": "small", ';
+                else{
+                    $loop_start=$loop_length+2;
                 }
-                echo '"title": "'; echo $nextPost->post_title ; echo '",';
-                echo '"url": "'; echo get_permalink($nextPost); echo '",';
-                echo '"image": "'; echo get_the_post_thumbnail_url($nextPost->ID); echo '"';
-                echo '}';
-                if( $loop_start === $loop_length)
+                if( $loop_start >= $loop_length)
                 { //wp_reset_postdata();
                     $post=$revert_post_content;}
             }

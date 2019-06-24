@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: AMP
- * Description: Enable AMP on your WordPress site, the WordPress way.
+ * Description: Enable AMP on your WordPress site, the WordPress way Twimbit Version
  * Plugin URI: https://amp-wp.org
- * Author: AMP Project Contributors
+ * Author: AMP Project Contributors & Atlancey
  * Author URI: https://github.com/ampproject/amp-wp/graphs/contributors
- * Version: 1.2-beta2-20190604T165802Z-4530a2c6
+ * Version: 1.2.0  modified by Atlancey
  * Text Domain: amp
  * Domain Path: /languages/
  * License: GPLv2 or later
@@ -28,7 +28,7 @@ if ( version_compare( phpversion(), '5.4', '<' ) ) {
 	$_amp_load_errors->add(
 		'insufficient_php_version',
 		sprintf(
-			/* translators: %s: required PHP version */
+		/* translators: %s: required PHP version */
 			__( 'The AMP plugin requires PHP %s. Please contact your host to update your PHP version.', 'amp' ),
 			'5.4+'
 		)
@@ -101,7 +101,7 @@ if ( count( $_amp_missing_extensions ) > 0 ) {
 	$_amp_load_errors->add(
 		'missing_extension',
 		sprintf(
-			/* translators: %s is list of missing extensions */
+		/* translators: %s is list of missing extensions */
 			_n(
 				'The following PHP extension is missing: %s. Please contact your host to finish installation.',
 				'The following PHP extensions are missing: %s. Please contact your host to finish installation.',
@@ -116,7 +116,7 @@ if ( count( $_amp_missing_classes ) > 0 ) {
 	$_amp_load_errors->add(
 		'missing_class',
 		sprintf(
-			/* translators: %s is list of missing extensions */
+		/* translators: %s is list of missing extensions */
 			_n(
 				'The following PHP class is missing: %s. Please contact your host to finish installation.',
 				'The following PHP classes are missing: %s. Please contact your host to finish installation.',
@@ -131,7 +131,7 @@ if ( count( $_amp_missing_functions ) > 0 ) {
 	$_amp_load_errors->add(
 		'missing_class',
 		sprintf(
-			/* translators: %s is list of missing extensions */
+		/* translators: %s is list of missing extensions */
 			_n(
 				'The following PHP function is missing: %s. Please contact your host to finish installation.',
 				'The following PHP functions are missing: %s. Please contact your host to finish installation.',
@@ -149,7 +149,7 @@ if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) || ! file_exists( __DIR__
 	$_amp_load_errors->add(
 		'build_required',
 		sprintf(
-			/* translators: %s: composer install && npm install && npm run build */
+		/* translators: %s: composer install && npm install && npm run build */
 			__( 'You appear to be running the AMP plugin from source. Please do %s to finish installation.', 'amp' ), // phpcs:ignore WordPress.Security.EscapeOutput
 			'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
 		)
@@ -165,20 +165,20 @@ if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) || ! file_exists( __DIR__
 function _amp_show_load_errors_admin_notice() {
 	global $_amp_load_errors;
 	?>
-	<div class="notice notice-error">
-		<p>
-			<strong><?php esc_html_e( 'AMP plugin unable to initialize.', 'amp' ); ?></strong>
-			<ul>
+    <div class="notice notice-error">
+        <p>
+            <strong><?php esc_html_e( 'AMP plugin unable to initialize.', 'amp' ); ?></strong>
+        <ul>
 			<?php foreach ( array_keys( $_amp_load_errors->errors ) as $error_code ) : ?>
 				<?php foreach ( $_amp_load_errors->get_error_messages( $error_code ) as $message ) : ?>
-					<li>
+                    <li>
 						<?php echo wp_kses_post( $message ); ?>
-					</li>
+                    </li>
 				<?php endforeach; ?>
 			<?php endforeach; ?>
-			</ul>
-		</p>
-	</div>
+        </ul>
+        </p>
+    </div>
 	<?php
 }
 
@@ -209,7 +209,7 @@ if ( ! empty( $_amp_load_errors->errors ) ) {
 
 define( 'AMP__FILE__', __FILE__ );
 define( 'AMP__DIR__', dirname( __FILE__ ) );
-define( 'AMP__VERSION', '1.2-beta2-20190604T165802Z-4530a2c6' );
+define( 'AMP__VERSION', '1.2.0' );
 
 /**
  * Print admin notice if plugin installed with incorrect slug (which impacts WordPress's auto-update system).
@@ -219,20 +219,20 @@ define( 'AMP__VERSION', '1.2-beta2-20190604T165802Z-4530a2c6' );
 function _amp_incorrect_plugin_slug_admin_notice() {
 	$actual_slug = basename( AMP__DIR__ );
 	?>
-	<div class="notice notice-warning">
-		<p>
+    <div class="notice notice-warning">
+        <p>
 			<?php
 			echo wp_kses_post(
 				sprintf(
-					/* translators: %1$s is the current directory name, and %2$s is the required directory name */
+				/* translators: %1$s is the current directory name, and %2$s is the required directory name */
 					__( 'You appear to have installed the AMP plugin incorrectly. It is currently installed in the <code>%1$s</code> directory, but it needs to be placed in a directory named <code>%2$s</code>. Please rename the directory. This is important for WordPress plugin auto-updates.', 'amp' ),
 					$actual_slug,
 					'amp'
 				)
 			);
 			?>
-		</p>
-	</div>
+        </p>
+    </div>
 	<?php
 }
 if ( 'amp' !== basename( AMP__DIR__ ) ) {
@@ -278,7 +278,7 @@ function amp_deactivate() {
 		}
 	}
 
-	flush_rewrite_rules();
+	flush_rewrite_rules( false );
 }
 
 /*
@@ -333,38 +333,42 @@ function amp_init() {
 	 */
 	do_action( 'amp_init' );
 
-	add_rewrite_endpoint( amp_get_slug(), EP_PERMALINK );
-
 	add_filter( 'allowed_redirect_hosts', array( 'AMP_HTTP', 'filter_allowed_redirect_hosts' ) );
 	AMP_HTTP::purge_amp_query_vars();
 	AMP_HTTP::send_cors_headers();
 	AMP_HTTP::handle_xhr_request();
 	AMP_Theme_Support::init();
 	AMP_Validation_Manager::init();
-	AMP_Post_Type_Support::add_post_type_support();
-	AMP_Story_Post_Type::register();
 	AMP_Service_Worker::init();
-	add_action( 'init', array( 'AMP_Post_Type_Support', 'add_post_type_support' ), 1000 ); // After post types have been defined.
+	add_action( 'admin_init', 'AMP_Options_Manager::register_settings' );
+	add_action( 'wp_loaded', 'amp_add_options_menu' );
+	add_action( 'wp_loaded', 'amp_admin_pointer' );
+	add_action( 'wp_loaded', 'amp_post_meta_box' ); // Used in both Website and Stories experiences.
+
+	if ( AMP_Options_Manager::is_website_experience_enabled() ) {
+		add_rewrite_endpoint( amp_get_slug(), EP_PERMALINK );
+		AMP_Post_Type_Support::add_post_type_support();
+		add_action( 'init', array( 'AMP_Post_Type_Support', 'add_post_type_support' ), 1000 ); // After post types have been defined.
+		add_action( 'parse_query', 'amp_correct_query_when_is_front_page' );
+		add_action( 'admin_bar_menu', 'amp_add_admin_bar_view_link', 100 );
+		add_action( 'wp_loaded', 'amp_editor_core_blocks' );
+		add_filter( 'request', 'amp_force_query_var_value' );
+
+		// Add actions for reader mode templates.
+		add_action( 'wp', 'amp_maybe_add_actions' );
+
+		// Redirect the old url of amp page to the updated url.
+		add_filter( 'old_slug_redirect_url', 'amp_redirect_old_slug_to_new_url' );
+	}
+
+	if ( AMP_Options_Manager::is_stories_experience_enabled() ) {
+		AMP_Story_Post_Type::register();
+		add_action( 'wp_loaded', 'amp_story_templates' );
+	}
 
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		WP_CLI::add_command( 'amp', new AMP_CLI() );
 	}
-
-	add_filter( 'request', 'amp_force_query_var_value' );
-	add_action( 'admin_init', 'AMP_Options_Manager::register_settings' );
-	add_action( 'wp_loaded', 'amp_editor_core_blocks' );
-	add_action( 'wp_loaded', 'amp_post_meta_box' );
-	add_action( 'wp_loaded', 'amp_story_templates' );
-	add_action( 'wp_loaded', 'amp_add_options_menu' );
-	add_action( 'wp_loaded', 'amp_admin_pointer' );
-	add_action( 'parse_query', 'amp_correct_query_when_is_front_page' );
-	add_action( 'admin_bar_menu', 'amp_add_admin_bar_view_link', 100 );
-
-	// Redirect the old url of amp page to the updated url.
-	add_filter( 'old_slug_redirect_url', 'amp_redirect_old_slug_to_new_url' );
-
-	// Add actions for legacy post templates.
-	add_action( 'wp', 'amp_maybe_add_actions' );
 
 	/*
 	 * Broadcast plugin updates.
@@ -513,7 +517,7 @@ function amp_correct_query_when_is_front_page( WP_Query $query ) {
  *
  *      add_theme_support( AMP_Theme_Support::SLUG );
  *
- * This will serve templates in native AMP, allowing you to use AMP components in your theme templates.
+ * This will serve templates in AMP-first, allowing you to use AMP components in your theme templates.
  * If you want to make available in transitional mode, where templates are served in AMP or non-AMP documents, do:
  *
  *      add_theme_support( AMP_Theme_Support::SLUG, array(
@@ -526,7 +530,7 @@ function amp_correct_query_when_is_front_page( WP_Query $query ) {
  *          'template_dir' => 'amp',
  *      ) );
  *
- * If you want to have AMP-specific templates in addition to serving native AMP, do:
+ * If you want to have AMP-specific templates in addition to serving AMP-first, do:
  *
  *      add_theme_support( AMP_Theme_Support::SLUG, array(
  *          'paired'       => false,
@@ -549,7 +553,7 @@ function amp_correct_query_when_is_front_page( WP_Query $query ) {
  *      ) );
  *
  * @see AMP_Theme_Support::read_theme_support()
- * @return boolean Whether this is in AMP 'canonical' mode, that is whether it is native and there is not separate AMP URL current URL.
+ * @return boolean Whether this is in AMP 'canonical' mode, that is whether it is AMP-first and there is not a separate (paired) AMP URL.
  */
 function amp_is_canonical() {
 	if ( ! current_theme_supports( AMP_Theme_Support::SLUG ) ) {
@@ -557,8 +561,8 @@ function amp_is_canonical() {
 	}
 
 	$args = AMP_Theme_Support::get_theme_support_args();
-	if ( isset( $args['paired'] ) ) {
-		return empty( $args['paired'] );
+	if ( isset( $args[ AMP_Theme_Support::PAIRED_FLAG ] ) ) {
+		return empty( $args[ AMP_Theme_Support::PAIRED_FLAG ] );
 	}
 
 	// If there is a template_dir, then transitional mode is implied.
@@ -716,4 +720,4 @@ function amp_redirect_old_slug_to_new_url( $link ) {
 	return $link;
 }
 // to make stories landscape
-  add_filter( 'amp_story_supports_landscape', '__return_true' );
+add_filter( 'amp_story_supports_landscape', '__return_true' );

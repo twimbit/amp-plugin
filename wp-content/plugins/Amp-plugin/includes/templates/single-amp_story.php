@@ -23,20 +23,24 @@ the_post();
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
     <style>
-        .button_bottom{
-            background: rgba(0, 0, 0, 0.28);
-            border-radius: 3px;
-            left: 10px;
+        .button_bottom{background: transparent;
             background-repeat: no-repeat;
-            z-index: 10;
-            height: 40px;
-            width: 15%;
-            margin-top: 14px;
+            height: 30px;
+            z-index: 15;
+            margin-top: 0px;
             border: none;
-            box-shadow: 0px -2px 9px 1px rgba(0,0,0,.2);
-            background-position: center center;
-            background-size: 20px;
-            display: inline-grid;
+            /* background-position: center center; */
+            background-size: 15px;
+
+        }
+        .bar_bottom{
+            background: rgba(0,0,0,.28);
+            width: 40%;
+            position: fixed;
+            z-index: 10;
+            left: 30%;
+            bottom: -8px;
+            border-radius: 10px 10px 0 0;
         }
     </style>
 
@@ -126,30 +130,36 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
 </div>
 <!-- navigation button -->
 
-<div style="
-    position: fixed;
-    z-index: 10;
-    bottom: 10px;
-    width: 100%;
+<div class="bar_bottom" style="
 ">
-    <a style="
-    color: #fafafa00;
-" href="<?php echo $previous_post_url;?>">
+    <a style=" width: 50%; display: inline-grid;
+        color: #ffffff36; z-index: 20;
+  border-style: solid;
+  border-width: 0px 1px 0px 0px;
+" href="<?php echo $previous_post_url;?>" class="button_bottom">
         <button  class="button_bottom" style=" background-image: url('<?php echo $home_url; ?>wp-content/plugins/Amp-plugin/assets/images/back.svg') !important;
-                float: left;
-                border-radius: 0px 10px 10px 0px;">
+                float: left; background-position: 20% center;">
 
         </button>
     </a>
+<p style="        position: absolute;
 
+    bottom: -5px;
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+    width: 100%;
+    text-align: center;">
+    Switch Stories
+</p>
 
-    <a style="
+    <a style=" width: 45%; display: inline-grid;
     color: #fafafa00;
-" href="<?php echo $next_post_url;?>">
-        <button class="button_bottom" style="background-image: url('<?php echo $home_url; ?>wp-content/plugins/Amp-plugin/assets/images/next.svg'); !important;
+" href="<?php echo $next_post_url;?>" class="button_bottom">
+        <button onclick="" class="button_bottom" style="background-position: 80% center; background-image: url('<?php echo $home_url; ?>wp-content/plugins/Amp-plugin/assets/images/next.svg'); !important;
 
                 float: right;
-                border-radius: 10px 0px 0px 10px;">
+               ">
 
         </button>
     </a>

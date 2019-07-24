@@ -28,7 +28,7 @@ class AMP_Autoloader {
 	 *
 	 * @var string[]
 	 */
-	private static $classmap = array(
+	private static $classmap = [
 		'AMP_Editor_Blocks'                  => 'includes/admin/class-amp-editor-blocks',
 		'AMP_Theme_Support'                  => 'includes/class-amp-theme-support',
 		'AMP_Story_Post_Type'                => 'includes/class-amp-story-post-type',
@@ -89,6 +89,7 @@ class AMP_Autoloader {
 		'AMP_Video_Sanitizer'                => 'includes/sanitizers/class-amp-video-sanitizer',
 		'AMP_Core_Theme_Sanitizer'           => 'includes/sanitizers/class-amp-core-theme-sanitizer',
 		'AMP_Story_Sanitizer'                => 'includes/sanitizers/class-amp-story-sanitizer',
+		'AMP_Story_Export_Sanitizer'         => 'includes/sanitizers/class-amp-story-export-sanitizer',
 		'AMP_Noscript_Fallback'              => 'includes/sanitizers/trait-amp-noscript-fallback',
 		'AMP_Customizer_Design_Settings'     => 'includes/settings/class-amp-customizer-design-settings',
 		'AMP_Customizer_Settings'            => 'includes/settings/class-amp-customizer-settings',
@@ -99,6 +100,7 @@ class AMP_Autoloader {
 		'AMP_HTML_Utils'                     => 'includes/utils/class-amp-html-utils',
 		'AMP_Image_Dimension_Extractor'      => 'includes/utils/class-amp-image-dimension-extractor',
 		'AMP_Validation_Manager'             => 'includes/validation/class-amp-validation-manager',
+		'AMP_Validation_Callback_Wrapper'    => 'includes/validation/class-amp-validation-callback-wrapper',
 		'AMP_Validated_URL_Post_Type'        => 'includes/validation/class-amp-validated-url-post-type',
 		'AMP_Validation_Error_Taxonomy'      => 'includes/validation/class-amp-validation-error-taxonomy',
 		'AMP_CLI'                            => 'includes/class-amp-cli',
@@ -107,9 +109,9 @@ class AMP_Autoloader {
 		'AMP_Widget_Archives'                => 'includes/widgets/class-amp-widget-archives',
 		'AMP_Widget_Categories'              => 'includes/widgets/class-amp-widget-categories',
 		'AMP_Widget_Text'                    => 'includes/widgets/class-amp-widget-text',
-		'AMP_Test_Stub_Sanitizer'            => 'tests/stubs',
-		'AMP_Test_World_Sanitizer'           => 'tests/stubs',
-	);
+		'AMP_Test_Stub_Sanitizer'            => 'tests/php/stubs',
+		'AMP_Test_World_Sanitizer'           => 'tests/php/stubs',
+	];
 
 	/**
 	 * Is registered.
@@ -148,7 +150,7 @@ class AMP_Autoloader {
 		}
 
 		if ( ! self::$is_registered ) {
-			spl_autoload_register( array( __CLASS__, 'autoload' ) );
+			spl_autoload_register( [ __CLASS__, 'autoload' ] );
 			self::$is_registered = true;
 		}
 	}

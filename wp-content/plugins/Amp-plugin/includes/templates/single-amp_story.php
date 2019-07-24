@@ -31,12 +31,16 @@ the_post();
             z-index: 10;
             height: 40px;
             width: 15%;
+            max-width: 80px;
             margin-top: 14px;
             border: none;
             box-shadow: 0px -2px 9px 1px rgba(0,0,0,.2);
             background-position: center center;
             background-size: 20px;
             display: inline-grid;
+        }
+        *{
+            outline:none;
         }
     </style>
 
@@ -129,7 +133,7 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
 <div style="
     position: fixed;
     z-index: 10;
-    bottom: 10px;
+    bottom: 60px;
     width: 100%;
 ">
     <a style="

@@ -5,7 +5,7 @@
  * Plugin URI: https://amp-wp.org
  * Author: AMP Project Contributors & Atlancey
  * Author URI: https://github.com/ampproject/amp-wp/graphs/contributors
- * Version: 1.2.0  modified by Atlancey
+ * Version: 1.2.0  modified by Aman Sharma
  * Text Domain: amp
  * Domain Path: /languages/
  * License: GPLv2 or later
@@ -721,3 +721,5 @@ function amp_redirect_old_slug_to_new_url( $link ) {
 }
 // to make stories landscape
 add_filter( 'amp_story_supports_landscape', '__return_true' );
+
+

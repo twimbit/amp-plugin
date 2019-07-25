@@ -130,7 +130,7 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
 </div>
 <!-- navigation button -->
 
-<div style="
+<!--<div style="
     position: fixed;
     z-index: 10;
     bottom: 60px;
@@ -138,8 +138,8 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
 ">
     <a style="
     color: #fafafa00;
-" href="<?php echo $previous_post_url;?>">
-        <button  class="button_bottom" style=" background-image: url('<?php echo $home_url; ?>wp-content/plugins/Amp-plugin/assets/images/back.svg') !important;
+" href="<?php /*echo $previous_post_url;*/?>">
+        <button  class="button_bottom" style=" background-image: url('<?php /*echo $home_url; */?>wp-content/plugins/Amp-plugin/assets/images/back.svg') !important;
                 float: left;
                 border-radius: 0px 10px 10px 0px;">
 
@@ -149,8 +149,8 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
 
     <a style="
     color: #fafafa00;
-" href="<?php echo $next_post_url;?>">
-        <button class="button_bottom" style="background-image: url('<?php echo $home_url; ?>wp-content/plugins/Amp-plugin/assets/images/next.svg'); !important;
+" href="<?php /*echo $next_post_url;*/?>">
+        <button class="button_bottom" style="background-image: url('<?php /*echo $home_url; */?>wp-content/plugins/Amp-plugin/assets/images/next.svg'); !important;
 
                 float: right;
                 border-radius: 10px 0px 0px 10px;">
@@ -158,7 +158,7 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
         </button>
     </a>
 </div>
-
+-->
 
 <?php
 $metadata = amp_get_schemaorg_metadata();

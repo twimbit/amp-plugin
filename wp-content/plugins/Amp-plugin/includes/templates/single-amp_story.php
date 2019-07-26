@@ -100,7 +100,7 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
     color: #fafafa00;position: fixed;
     z-index: 5;
 " href="<?php echo $home_url;?>">
-    <button style="background-image: url('<?php echo $home_url; ?>wp-content/plugins/Amp-plugin/assets/images/close.svg') !important;
+    <button style="background-image: url('<?php echo $home_url; ?>wp-content/plugins/Amp-plugin/assets/images/exit.svg') !important;
             height: 18px;
             width: 18px;
             margin-left: 14px;

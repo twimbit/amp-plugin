@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: AMP
- * Description: Enable AMP on your WordPress site, the WordPress way Twimbit Version
+ * Description: Enable AMP on your WordPress site, the WordPress way.
  * Plugin URI: https://amp-wp.org
- * Author: AMP Project Contributors & Atlancey
+ * Author: AMP Project Contributors
  * Author URI: https://github.com/ampproject/amp-wp/graphs/contributors
- * Version: 1.2.1-beta1-20190718T190243Z-620e5841  modified by Atlancey
+ * Version: 1.2.1-RC1-20190820T195018Z-8ff2ce74
  * Text Domain: amp
  * Domain Path: /languages/
  * License: GPLv2 or later
@@ -15,7 +15,7 @@
 
 define( 'AMP__FILE__', __FILE__ );
 define( 'AMP__DIR__', dirname( __FILE__ ) );
-define( 'AMP__VERSION', '1.2.1-beta1-20190718T190243Z-620e5841' );
+define( 'AMP__VERSION', '1.2.1-RC1-20190820T195018Z-8ff2ce74' );
 
 /**
  * Errors encountered while loading the plugin.
@@ -364,8 +364,10 @@ function amp_init() {
 
 	if ( AMP_Options_Manager::is_stories_experience_enabled() ) {
 		AMP_Story_Post_Type::register();
-		add_action( 'wp_loaded', 'amp_story_templates' );
 	}
+
+	// Does its own is_stories_experience_enabled() check.
+	add_action( 'wp_loaded', 'amp_story_templates' );
 
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		WP_CLI::add_command( 'amp', new AMP_CLI() );
@@ -720,5 +722,3 @@ function amp_redirect_old_slug_to_new_url( $link ) {
 
 	return $link;
 }
-// to make stories landscape
-add_filter( 'amp_story_supports_landscape', '__return_true' );

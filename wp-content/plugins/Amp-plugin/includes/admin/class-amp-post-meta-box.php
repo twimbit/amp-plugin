@@ -131,14 +131,13 @@ class AMP_Post_Meta_Box {
 		$post     = get_post();
 		$screen   = get_current_screen();
 		$validate = (
-			isset( $screen->base )
-			&&
-			'post' === $screen->base
-			&&
-			is_post_type_viewable( $post->post_type )
-			&&
+			isset( $screen->base ) &&
+			'post' === $screen->base &&
+			! $screen->is_block_editor &&
+			is_post_type_viewable( $post->post_type ) &&
 			AMP_Story_Post_Type::POST_TYPE_SLUG !== $post->post_type
 		);
+
 		if ( ! $validate ) {
 			return;
 		}
@@ -149,6 +148,8 @@ class AMP_Post_Meta_Box {
 			false,
 			AMP__VERSION
 		);
+
+		wp_styles()->add_data( self::ASSETS_HANDLE, 'rtl', 'replace' );
 
 		$script_deps_path    = AMP__DIR__ . '/assets/js/' . self::ASSETS_HANDLE . '.deps.json';
 		$script_dependencies = file_exists( $script_deps_path )
@@ -208,6 +209,8 @@ class AMP_Post_Meta_Box {
 			[],
 			AMP__VERSION
 		);
+
+		wp_styles()->add_data( self::BLOCK_ASSET_HANDLE, 'rtl', 'replace' );
 
 		$script_deps_path    = AMP__DIR__ . '/assets/js/' . self::BLOCK_ASSET_HANDLE . '.deps.json';
 		$script_dependencies = file_exists( $script_deps_path )
@@ -286,7 +289,7 @@ class AMP_Post_Meta_Box {
 		];
 
 		// The preceding variables are used inside the following amp-status.php template.
-		include AMP__DIR__ . '/templates/admin/amp-status.php';
+		include AMP__DIR__ . '/includes/templates/amp-enabled-classic-editor-toggle.php';
 	}
 
 	/**

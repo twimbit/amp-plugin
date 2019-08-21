@@ -46,6 +46,8 @@ the_post();
 
 </head>
 
+
+
 <body>
 
 <!-- Get next and previous post url -->

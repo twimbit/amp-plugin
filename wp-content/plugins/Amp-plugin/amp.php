@@ -722,3 +722,6 @@ function amp_redirect_old_slug_to_new_url( $link ) {
 
 	return $link;
 }
+
+// to make stories landscape
+add_filter( 'amp_story_supports_landscape', '__return_true' );

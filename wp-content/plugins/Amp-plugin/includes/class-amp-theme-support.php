@@ -1382,6 +1382,9 @@ class AMP_Theme_Support {
 		wp_styles()->registered['admin-bar']->src = amp_get_asset_url( 'css/admin-bar.css' );
 		wp_styles()->registered['admin-bar']->ver = AMP__VERSION;
 
+		// Remove any possible '.min' to avoid RTL failing to generate the href for admin-bar-rtl.css, which does not currently have a minified version in the AMP plugin.
+		wp_styles()->registered['admin-bar']->extra['suffix'] = '';
+
 		// Remove script which is almost entirely made obsolete by :focus-inside in the forked admin-bar.css.
 		wp_dequeue_script( 'admin-bar' );
 
@@ -2312,6 +2315,7 @@ class AMP_Theme_Support {
 
 		// Enqueue default styles expected by sanitizer.
 		wp_enqueue_style( 'amp-default', amp_get_asset_url( 'css/amp-default.css' ), [], AMP__VERSION );
+		wp_styles()->add_data( 'amp-default', 'rtl', 'replace' );
 	}
 
 	/**

@@ -121,7 +121,7 @@ if(get_permalink(get_adjacent_post(false,'',true)) === get_permalink($post))
             margin-top: 22px;
             background-repeat: no-repeat;
             background: transparent;
-            background-size: contain;">
+            background-size: cover;">
 
     </button>
 </a>

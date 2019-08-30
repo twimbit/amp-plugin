@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: AMP
+ * Plugin Name: Amp-plugin
  * Description: Enable AMP on your WordPress site, the WordPress way. Twimbit Version
  * Plugin URI: https://amp-wp.org
  * Author: AMP Project Contributors & Atlancey
@@ -10,7 +10,7 @@
  * Domain Path: /languages/
  * License: GPLv2 or later
  *
- * @package AMP
+ * @package AMP-plugin
  */
 
 define( 'AMP__FILE__', __FILE__ );

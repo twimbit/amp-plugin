@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: AMP
- * Description: Enable AMP on your WordPress site, the WordPress way.
+ * Description: Enable AMP on your WordPress site, the WordPress way. Twimbit Version
  * Plugin URI: https://amp-wp.org
- * Author: AMP Project Contributors
+ * Author: AMP Project Contributors & Atlancey
  * Author URI: https://github.com/ampproject/amp-wp/graphs/contributors
  * Version: 1.2.2
  * Text Domain: amp
@@ -722,3 +722,5 @@ function amp_redirect_old_slug_to_new_url( $link ) {
 
 	return $link;
 }
+// to make stories landscape
+add_filter( 'amp_story_supports_landscape', '__return_true' );

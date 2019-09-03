@@ -364,6 +364,11 @@ function amp_init() {
 
 	if ( AMP_Options_Manager::is_stories_experience_enabled() ) {
 		AMP_Story_Post_Type::register();
+		add_action( 'init','add_orientation_mode_field_group');
+
+		function add_orientation_mode_field_group(){
+
+        }
 	}
 
 	// Does its own is_stories_experience_enabled() check.
@@ -722,5 +727,5 @@ function amp_redirect_old_slug_to_new_url( $link ) {
 
 	return $link;
 }
-// to make stories landscape
-add_filter( 'amp_story_supports_landscape', '__return_true' );
+//// to make stories landscape
+//add_filter( 'amp_story_supports_landscape', '__return_true' );

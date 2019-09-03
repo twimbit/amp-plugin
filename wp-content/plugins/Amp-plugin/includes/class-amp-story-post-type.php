@@ -180,7 +180,6 @@ class AMP_Story_Post_Type {
 				],
 			]
 		);
-
 		add_filter( 'post_row_actions', [ __CLASS__, 'remove_classic_editor_link' ], 11, 2 );
 
 		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
@@ -224,6 +223,8 @@ class AMP_Story_Post_Type {
 
 		// The AJAX handler for exporting an AMP story.
 		add_action( 'wp_ajax_' . self::AMP_STORIES_AJAX_ACTION, [ __CLASS__, 'handle_export' ] );
+
+
 
 		// Register render callback for just-in-time inclusion of dependent Google Font styles.
 		add_filter( 'render_block', [ __CLASS__, 'render_block_with_google_fonts' ], 10, 2 );
@@ -303,6 +304,53 @@ class AMP_Story_Post_Type {
 		add_action( 'wp_head', [ __CLASS__, 'print_feed_link' ] );
 
 		AMP_Story_Media::init();
+
+		if( function_exists('acf_add_local_field_group') ):
+
+			acf_add_local_field_group(array(
+				'key' => 'group_5d6e3f63acffe',
+				'title' => 'Orientation',
+				'fields' => array(
+					array(
+						'key' => 'field_5d6e3f6d2297f',
+						'label' => 'Landscape Mode',
+						'name' => 'landscape_mode',
+						'type' => 'true_false',
+						'instructions' => '',
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => array(
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						),
+						'message' => '',
+						'default_value' => 1,
+						'ui' => 1,
+						'ui_on_text' => '',
+						'ui_off_text' => '',
+					),
+				),
+				'location' => array(
+					array(
+						array(
+							'param' => 'post_type',
+							'operator' => '==',
+							'value' => 'amp_story',
+						),
+					),
+				),
+				'menu_order' => 0,
+				'position' => 'side',
+				'style' => 'seamless',
+				'label_placement' => 'top',
+				'instruction_placement' => 'field',
+				'hide_on_screen' => '',
+				'active' => true,
+				'description' => '',
+			));
+
+		endif;
 	}
 
 	/**

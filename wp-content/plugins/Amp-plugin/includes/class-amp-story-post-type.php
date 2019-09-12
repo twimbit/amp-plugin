@@ -305,6 +305,8 @@ class AMP_Story_Post_Type {
 
 		AMP_Story_Media::init();
 
+
+        // Adding landscape mode optionality field
 		if( function_exists('acf_add_local_field_group') ):
 
 			acf_add_local_field_group(array(
@@ -351,7 +353,52 @@ class AMP_Story_Post_Type {
 			));
 
 		endif;
+		//adding redirection to other story
+		if( function_exists('acf_add_local_field_group') ):
+
+			acf_add_local_field_group(array(
+				'key' => 'group_5d79e36346ed9',
+				'title' => 'Story Redirect',
+				'fields' => array(
+					array(
+						'key' => 'field_5d79e3c4ee05b',
+						'label' => 'Redirect URL',
+						'name' => 'redirect_url',
+						'type' => 'url',
+						'instructions' => '',
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => array(
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						),
+						'default_value' => 'False',
+						'placeholder' => 'False',
+					),
+				),
+				'location' => array(
+					array(
+						array(
+							'param' => 'post_type',
+							'operator' => '==',
+							'value' => 'amp_story',
+						),
+					),
+				),
+				'menu_order' => 0,
+				'position' => 'side',
+				'style' => 'default',
+				'label_placement' => 'top',
+				'instruction_placement' => 'label',
+				'hide_on_screen' => '',
+				'active' => true,
+				'description' => '',
+			));
+
+		endif;
 	}
+
 
 	/**
 	 * Remove classic editor action from AMP Story listing.
@@ -1602,32 +1649,32 @@ class AMP_Story_Post_Type {
 		}
 
 		?>
-		<<?php echo esc_attr( $wrapper_tag_name ); ?> <?php echo isset( $href ) ? wp_kses_post( $href ) : ''; ?> class="latest_stories__link">
-			<?php
-			$url = wp_get_attachment_image_url( $thumbnail_id, $args['size'] );
-			printf(
-				'<img src="%s" width="%d" height="%d" alt="%s" class="latest-stories__featured-img" data-amp-layout="fixed">',
-				esc_url( $url ),
-				esc_attr( AMP_Story_Media::STORY_SMALL_IMAGE_DIMENSION / 2 ),
-				esc_attr( AMP_Story_Media::STORY_LARGE_IMAGE_DIMENSION / 2 ),
-				esc_attr( get_the_title( $post ) )
-			);
-			?>
-			<span class="latest-stories__title"><?php echo esc_html( get_the_title( $post ) ); ?></span>
-			<div class="latest-stories__meta">
-				<?php echo wp_kses_post( $avatar ); ?>
-				<span class="latest-stories__author">
+        <<?php echo esc_attr( $wrapper_tag_name ); ?> <?php echo isset( $href ) ? wp_kses_post( $href ) : ''; ?> class="latest_stories__link">
+		<?php
+		$url = wp_get_attachment_image_url( $thumbnail_id, $args['size'] );
+		printf(
+			'<img src="%s" width="%d" height="%d" alt="%s" class="latest-stories__featured-img" data-amp-layout="fixed">',
+			esc_url( $url ),
+			esc_attr( AMP_Story_Media::STORY_SMALL_IMAGE_DIMENSION / 2 ),
+			esc_attr( AMP_Story_Media::STORY_LARGE_IMAGE_DIMENSION / 2 ),
+			esc_attr( get_the_title( $post ) )
+		);
+		?>
+        <span class="latest-stories__title"><?php echo esc_html( get_the_title( $post ) ); ?></span>
+        <div class="latest-stories__meta">
+			<?php echo wp_kses_post( $avatar ); ?>
+            <span class="latest-stories__author">
 					<?php
 					printf(
-						/* translators: 1: the post author. 2: the amount of time ago. */
+					/* translators: 1: the post author. 2: the amount of time ago. */
 						esc_html__( '%1$s &#8226; %2$s ago', 'amp' ),
 						esc_html( $author_display_name ),
 						esc_html( human_time_diff( get_post_time( 'U', false, $post ), current_time( 'timestamp' ) ) )
 					);
 					?>
 				</span>
-			</div>
-		</<?php echo esc_attr( $wrapper_tag_name ); ?>>
+        </div>
+        </<?php echo esc_attr( $wrapper_tag_name ); ?>>
 		<?php
 	}
 
@@ -1681,7 +1728,7 @@ class AMP_Story_Post_Type {
 		wp_enqueue_style( self::STORY_CARD_CSS_SLUG );
 		ob_start();
 		?>
-		<div class="amp-story-embed">
+        <div class="amp-story-embed">
 			<?php
 			self::the_single_story_card(
 				[
@@ -1690,7 +1737,7 @@ class AMP_Story_Post_Type {
 				]
 			);
 			?>
-		</div>
+        </div>
 		<?php
 		return ob_get_clean();
 	}
@@ -1761,29 +1808,29 @@ class AMP_Story_Post_Type {
 
 		ob_start();
 		?>
-		<div class="<?php echo esc_attr( $class ); ?>">
+        <div class="<?php echo esc_attr( $class ); ?>">
 			<?php if ( $is_amp_carousel ) : ?>
-				<amp-carousel layout="fixed-height" height="<?php echo esc_attr( $min_height ); ?>" type="carousel" class="latest-stories-carousel">
-			<?php else : ?>
-				<ul class="latest-stories-carousel">
-			<?php endif; ?>
-				<?php foreach ( $story_query->posts as $post ) : ?>
-					<<?php echo $is_amp_carousel ? 'div' : 'li'; ?> class="slide latest-stories__slide">
-						<?php
-						self::the_single_story_card(
-							[
-								'post'         => $post,
-								'size'         => $size,
-								'disable_link' => ! $is_amp_carousel,
-							]
-						);
-						?>
-					</<?php echo $is_amp_carousel ? 'div' : 'li'; ?>>
+            <amp-carousel layout="fixed-height" height="<?php echo esc_attr( $min_height ); ?>" type="carousel" class="latest-stories-carousel">
+				<?php else : ?>
+                <ul class="latest-stories-carousel">
+					<?php endif; ?>
+					<?php foreach ( $story_query->posts as $post ) : ?>
+                    <<?php echo $is_amp_carousel ? 'div' : 'li'; ?> class="slide latest-stories__slide">
 					<?php
-				endforeach;
-				?>
-			</<?php echo $is_amp_carousel ? 'amp-carousel' : 'ul'; ?>>
-		</div>
+					self::the_single_story_card(
+						[
+							'post'         => $post,
+							'size'         => $size,
+							'disable_link' => ! $is_amp_carousel,
+						]
+					);
+					?>
+                </<?php echo $is_amp_carousel ? 'div' : 'li'; ?>>
+			<?php
+			endforeach;
+			?>
+            </<?php echo $is_amp_carousel ? 'amp-carousel' : 'ul'; ?>>
+        </div>
 		<?php
 
 		wp_enqueue_style( self::STORY_CARD_CSS_SLUG );

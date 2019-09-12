@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: Amp-plugin
- * Description: Enable AMP on your WordPress site, the WordPress way. Twimbit Version
- * Plugin URI: https://amp-wp.org
+ * Description: Amp Stories on Twimbit
+ * Plugin URI: https://twimbit.com
  * Author: AMP Project Contributors & Atlancey
  * Author URI: https://github.com/ampproject/amp-wp/graphs/contributors
- * Version: 1.2.2
- * Text Domain: amp
+ * Version: 1.8
+ * Text Domain: Amp-plugin
  * Domain Path: /languages/
  * License: GPLv2 or later
  *
